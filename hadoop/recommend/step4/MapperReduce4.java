@@ -1,4 +1,4 @@
-package matrix.step2;
+package recommend.step4;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -14,7 +14,7 @@ import java.net.URI;
  * 慕课网
  * MapReduce 计算矩阵乘法
  */
-public class MapperReduce2 {
+public class MapperReduce4 {
 
 
 	//hdfs路径
@@ -22,26 +22,26 @@ public class MapperReduce2 {
 	//当前项目绝对路径
 	static String basePath = System.getProperty("user.dir");
 	//输入文件目录
-	static String inputPath = basePath + "/data/input/matrix/step2";
+	static String inputPath = basePath + "/data/output/recommend/step2";
 	//输出文件目录
-	static String outPath = basePath + "/data/output/matrix/step2";
+	static String outPath = basePath + "/data/output/recommend/step4";
 	//第一步的输出作为第二步的缓存目录
-	static String cachePath = basePath + "/data/output/matrix/step1/part-r-00000";
+	static String cachePath = basePath + "/data/output/recommend/step3/part-r-00000";
 
 
 	public static void main(String[] args) throws Exception {
 		//实例化一个Job对象
 		Configuration conf = new Configuration(); //加载配置文件
-		Job job = Job.getInstance(conf, "step2");
+		Job job = Job.getInstance(conf, "step4");
 
-		job.addCacheArchive(new URI(cachePath + "#mymatrix"));
+		job.addCacheArchive(new URI(cachePath + "#score"));
 
 		//设置Job作业所在jar包
-		job.setJarByClass(MapperReduce2.class);
+		job.setJarByClass(MapperReduce4.class);
 
 		//设置本次作业的Mapper类和Reducer类
-		job.setMapperClass(Mapper2.class);
-		job.setReducerClass(Reduce2.class);
+		job.setMapperClass(Mapper4.class);
+		job.setReducerClass(Reduce4.class);
 
 		//设置Mapper类的输出key-value类型
 		job.setMapOutputKeyClass(Text.class);

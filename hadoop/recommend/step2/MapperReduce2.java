@@ -1,4 +1,4 @@
-package matrix.step2;
+package recommend.step2;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
@@ -22,11 +22,11 @@ public class MapperReduce2 {
 	//当前项目绝对路径
 	static String basePath = System.getProperty("user.dir");
 	//输入文件目录
-	static String inputPath = basePath + "/data/input/matrix/step2";
+	static String inputPath = basePath + "/data/output/recommend/step1";
 	//输出文件目录
-	static String outPath = basePath + "/data/output/matrix/step2";
+	static String outPath = basePath + "/data/output/recommend/step2";
 	//第一步的输出作为第二步的缓存目录
-	static String cachePath = basePath + "/data/output/matrix/step1/part-r-00000";
+	static String cachePath = basePath + "/data/output/recommend/step1/part-r-00000";
 
 
 	public static void main(String[] args) throws Exception {
@@ -34,7 +34,7 @@ public class MapperReduce2 {
 		Configuration conf = new Configuration(); //加载配置文件
 		Job job = Job.getInstance(conf, "step2");
 
-		job.addCacheArchive(new URI(cachePath + "#mymatrix"));
+		job.addCacheArchive(new URI(cachePath + "#itemUserScore"));
 
 		//设置Job作业所在jar包
 		job.setJarByClass(MapperReduce2.class);
