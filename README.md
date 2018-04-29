@@ -1,6 +1,6 @@
 
 ## 几个 MapReduce 小程序
 
-1. wordcount
-2. 矩阵相乘
-3. 气温统计
+1. wordcount:单词统计
+2. matrix:矩阵相乘
+3. temperature:气温统计
