@@ -1,4 +1,4 @@
-package other;
+package curd;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.*;

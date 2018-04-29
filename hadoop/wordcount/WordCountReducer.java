@@ -14,9 +14,10 @@ public class WordCountReducer extends Reducer<Text, LongWritable, Text, LongWrit
 
     /**
      * 在调用reduce方法之前有个shuffle过程
-     * reduce()方法的输入数据来自于shuffle的输出，格式形如：<hello, {1,1,……}>
+     * reduce()方法的输入数据来自于shuffle的输出，格式形如：<hello, {log4j.properties,log4j.properties,……}>
      */
-    protected void reduce(Text key, Iterable<LongWritable> values, Mapper.Context context)
+    @Override
+    protected void reduce(Text key, Iterable<LongWritable> values, Context context)
             throws IOException, InterruptedException {
         //定义一个累加计数器
         long counter = 0;

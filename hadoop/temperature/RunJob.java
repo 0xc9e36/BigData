@@ -18,7 +18,14 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class RunJob {
 
+    //hdfs路径
     static final String HDFS = "hdfs://localhost:8020";
+    //当前项目绝对路径
+    static String basePath = System.getProperty("user.dir");
+    //输入文件目录
+    static String inputPath = basePath + "/data/input/year_temperature";
+    //输出文件目录
+    static String outPath = basePath + "/data/output/year_temperature";
 
     static SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
@@ -65,7 +72,7 @@ public class RunJob {
     }
 
     static class ReducerJob extends Reducer<keyPair, Text, keyPair, Text> {
-
+        @Override
         protected void reduce(keyPair key, Iterable<Text> value, Context context)
                 throws IOException, InterruptedException {
             for (Text v : value) {
@@ -79,7 +86,7 @@ public class RunJob {
         try {
 
             Job job = new Job(conf);
-            job.setJobName("year_temperature");
+            job.setJobName("input/year_temperature");
 
             job.setJarByClass(RunJob.class);
             job.setMapperClass(MapperJob.class);
@@ -93,8 +100,8 @@ public class RunJob {
             job.setSortComparatorClass(Sort.class);
             job.setGroupingComparatorClass(Group.class);
 
-            FileInputFormat.addInputPath(job, new Path("/opt/input/year_temperature"));
-            FileOutputFormat.setOutputPath(job, new Path(HDFS + "/output/year_temperature"));
+            FileInputFormat.addInputPath(job, new Path(inputPath));
+            FileOutputFormat.setOutputPath(job, new Path(outPath));
             System.exit(job.waitForCompletion(true) ? 0 : 1);
         } catch (Exception e) {
             e.printStackTrace();
